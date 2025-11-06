@@ -1,0 +1,63 @@
+
+{% extends 'main.html' %}
+{% load static %}
+{% block title %}صفحه اصلی - فروشگاه شماره مجازی{% endblock %}
+
+{% block content %}
+ <!-- بنر معرفی -->
+  <section class="hero">
+    <div class="container">
+      <h1>شماره مجازی برای همه نیازهای شما</h1>
+      <p>ارائه سرویس‌های سریع، مطمئن و حرفه‌ای با پشتیبانی ۲۴ ساعته</p>
+      <a href="{% url 'numbers:services_list' %}" class="btn primary">شروع کن</a>
+    </div>
+  </section>
+
+  <!-- خدمات -->
+  <section class="services" id="services">
+    <div class="container">
+      <h2>خدمات ما</h2>
+      <div class="service-grid">
+        <div class="service-box">
+          <i class="fas fa-phone-volume"></i>
+          <h3>شماره مجازی</h3>
+          <p>ارائه شماره مجازی برای تلگرام، واتساپ، اینستاگرام و سایر پلتفرم‌ها</p>
+        </div>
+        <div class="service-box">
+          <i class="fas fa-shield-alt"></i>
+          <h3>امنیت بالا</h3>
+          <p>شماره‌های اختصاصی با امنیت بالا و کنترل کامل برای کاربر</p>
+        </div>
+        <div class="service-box">
+          <i class="fas fa-clock"></i>
+          <h3>تحویل آنی</h3>
+          <p>خرید شماره و دریافت آنی با سیستم خودکار و سریع</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+  <div class="container">
+    <h2>درباره ما</h2>
+    <p>در NumberPro، ما با تکیه بر سال‌ها تجربه در ارائه شماره‌های مجازی، بستری امن، سریع و کاربرمحور فراهم کرده‌ایم. هدف ما ارائه راهکارهایی نوین با پشتیبانی ۲۴ ساعته و قیمت‌های رقابتی برای تمام کاربران ایرانی است. ما به کیفیت خدمات و رضایت مشتریان خود افتخار می‌کنیم.</p>
+  </div>
+</section>
+
+
+  <!-- تماس با ما -->
+  <section class="contact" id="contact">
+  <div class="container">
+    <h2>تماس با ما</h2>
+    <p>برای هرگونه پرسش، پشتیبانی یا همکاری با ما در تماس باشید:</p>
+    <ul class="contact-list">
+      <li><i class="fas fa-envelope"></i> ایمیل: <a href="mailto:info@numberpro.ir">info@numberpro.ir</a></li>
+      <li><i class="fas fa-phone"></i> تلفن: ۰۹۱۲۱۲۳۴۵۶۷</li>
+      <li><i class="fab fa-telegram"></i> تلگرام: <a href="https://t.me/numberpro_support">@numberpro_support</a></li>
+    </ul>
+  </div>
+</section>
+
+
+
+{% endblock %}

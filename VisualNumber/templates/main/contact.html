@@ -1,0 +1,190 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="contact-page container">
+
+  <!-- هدر -->
+  <section class="contact-hero">
+    <h1>تماس با ما</h1>
+    <p>خوشحال می‌شویم صدای شما را بشنویم! اگر سؤال، پیشنهاد یا مشکلی دارید، با ما در ارتباط باشید.</p>
+  </section>
+
+  <!-- فرم تماس -->
+  <section class="contact-form-section">
+    <div class="contact-card">
+      <h2>ارسال پیام</h2>
+      <form method="post" action="">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="name">نام کامل</label>
+          <input type="text" id="name" name="name" required placeholder="نام شما">
+        </div>
+
+        <div class="form-group">
+          <label for="email">ایمیل</label>
+          <input type="email" id="email" name="email" required placeholder="ایمیل شما">
+        </div>
+
+        <div class="form-group">
+          <label for="message">پیام شما</label>
+          <textarea id="message" name="message" rows="5" required placeholder="متن پیام..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">📩 ارسال پیام</button>
+      </form>
+    </div>
+
+    <!-- اطلاعات تماس -->
+    <div class="contact-info-card">
+      <h2>اطلاعات تماس</h2>
+      <ul>
+        <li>📞 تلفن: <strong>021-12345678</strong></li>
+        <li>💬 واتساپ: <a href="https://wa.me/989123456789" target="_blank">+98 912 345 6789</a></li>
+        <li>📧 ایمیل: <a href="mailto:support@numberland.ir">support@numberland.ir</a></li>
+        <li>📍 آدرس: تهران، خیابان آزادی، برج فناوری</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<style>
+.contact-page {
+  font-family: Vazir, sans-serif;
+  padding: 60px 15px;
+  color: #2c3e50;
+}
+
+/* --- هدر صفحه --- */
+.contact-hero {
+  text-align: center;
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  color: #fff;
+  padding: 60px 20px;
+  border-radius: 20px;
+  margin-bottom: 60px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+
+.contact-hero h1 {
+  font-size: 2.3rem;
+  margin-bottom: 15px;
+}
+
+.contact-hero p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.8;
+}
+
+/* --- فرم و اطلاعات --- */
+.contact-form-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.contact-card, .contact-info-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card:hover, .contact-info-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+
+.contact-card h2, .contact-info-card h2 {
+  color: #007bff;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+/* --- فرم --- */
+.form-group {
+  margin-bottom: 20px;
+  text-align: right;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #007bff;
+}
+
+/* --- دکمه ارسال --- */
+.btn-submit {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-submit:hover {
+  background: #00a8ff;
+}
+
+/* --- اطلاعات تماس --- */
+.contact-info-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-info-card li {
+  margin: 12px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.contact-info-card a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.contact-info-card a:hover {
+  text-decoration: underline;
+}
+
+/* --- انیمیشن --- */
+.contact-card, .contact-info-card {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+{% endblock %}

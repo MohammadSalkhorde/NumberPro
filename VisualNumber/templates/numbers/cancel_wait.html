@@ -1,0 +1,106 @@
+{% extends "main.html" %}
+{% block content %}
+<div id="cancel-container">
+  <div class="cancel-card">
+    <div class="loader"></div>
+    <h2>⏳ لطفاً صبر کنید...</h2>
+    <p>عملیات لغو شماره ممکن است تا یک دقیقه طول بکشد.</p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const numberId = "{{ number_id }}";
+    setTimeout(() => {
+      fetch(`/numbers/cancel/ajax/${numberId}/`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            window.location.href = "/numbers/?canceled=1";
+          } else {
+            window.location.href = "/numbers/?error=1";
+          }
+        });
+    }, 2000); // نمایش پیام صبر برای ۲ ثانیه قبل از شروع AJAX
+  });
+</script>
+
+<style>
+/* --- کانتینر کلی --- */
+#cancel-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  background-color: #f5f7fa;
+  font-family: Vazir, sans-serif;
+}
+
+/* --- کارت اصلی --- */
+.cancel-card {
+  background: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+/* --- متن‌ها --- */
+.cancel-card h2 {
+  color: #007bff;
+  font-size: 1.6rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.cancel-card p {
+  color: #555;
+  font-size: 1rem;
+}
+
+/* --- لودر --- */
+.loader {
+  border: 6px solid #e6e6e6;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px auto;
+  animation: spin 1s linear infinite;
+}
+
+/* --- انیمیشن چرخش --- */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* --- انیمیشن ورود --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- واکنش‌گرایی --- */
+@media (max-width: 600px) {
+  .cancel-card {
+    width: 90%;
+    padding: 30px 20px;
+  }
+
+  .cancel-card h2 {
+    font-size: 1.3rem;
+  }
+
+  .cancel-card p {
+    font-size: 0.9rem;
+  }
+
+  .loader {
+    width: 50px;
+    height: 50px;
+  }
+}
+</style>
+{% endblock %}

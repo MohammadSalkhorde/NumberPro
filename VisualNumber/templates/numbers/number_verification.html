@@ -1,0 +1,158 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+  <div class="verification-card">
+    <div class="icon-box">
+      <i class="fa-solid fa-shield-check"></i>
+    </div>
+    <h2>کد تأیید شما آماده است ✅</h2>
+
+    <div class="code-box">
+      <span id="verification-code">{{ verification_code }}</span>
+      <button class="copy-btn" onclick="copyCode()">کپی</button>
+    </div>
+
+    <p class="hint">این کد را در برنامه یا سایتی که در حال ثبت‌نام هستید وارد کنید.</p>
+
+    <div class="actions">
+      <a href="{% url 'numbers:services_list' %}" class="btn back">بازگشت به سرویس‌ها</a>
+      <a href="{% url 'numbers:cancel_wait' number_id %}" class="btn cancel">لغو شماره ❌</a>
+    </div>
+  </div>
+</div>
+
+<script>
+function copyCode() {
+  const code = document.getElementById("verification-code").innerText;
+  navigator.clipboard.writeText(code);
+  Swal.fire({
+    icon: 'success',
+    title: 'کپی شد!',
+    text: 'کد با موفقیت در کلیپ‌بورد ذخیره شد ✅',
+    confirmButtonText: 'باشه',
+    timer: 1500,
+    showConfirmButton: false
+  });
+}
+</script>
+
+<style>
+.verification-card {
+  background: #fff;
+  padding: 50px 40px;
+  border-radius: 16px;
+  max-width: 600px;
+  margin: 80px auto;
+  text-align: center;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.06);
+  font-family: Vazir, sans-serif;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.icon-box {
+  width: 80px;
+  height: 80px;
+  background: #e8f1ff;
+  color: #007bff;
+  font-size: 40px;
+  border-radius: 50%;
+  margin: 0 auto 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.verification-card h2 {
+  font-size: 1.6rem;
+  color: #007bff;
+  margin-bottom: 25px;
+}
+
+.code-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f9fc;
+  border: 1px solid #d0e1ff;
+  border-radius: 10px;
+  padding: 12px 20px;
+  margin-bottom: 20px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c3e50;
+  letter-spacing: 2px;
+}
+
+.copy-btn {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-right: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.copy-btn:hover {
+  background: #0056b3;
+}
+
+.hint {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.btn.back {
+  background: #007bff;
+  color: white;
+}
+
+.btn.back:hover {
+  background: #0056b3;
+}
+
+.btn.cancel {
+  background: #fff;
+  border: 1px solid #e74c3c;
+  color: #e74c3c;
+}
+
+.btn.cancel:hover {
+  background: #e74c3c;
+  color: #fff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* موبایل */
+@media (max-width: 600px) {
+  .verification-card {
+    padding: 30px 20px;
+  }
+  .code-box {
+    font-size: 1.2rem;
+  }
+}
+</style>
+{% endblock %}

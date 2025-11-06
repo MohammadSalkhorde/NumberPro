@@ -1,0 +1,150 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div class="container">
+  {% if error %}
+    <div class="alert error">
+      <i class="fa-solid fa-triangle-exclamation"></i>
+      {{ error }}
+    </div>
+  {% else %}
+    <div class="number-card">
+      {% if country_image %}
+        <img src="{{ country_image }}" class="flag" alt="{{ country_name }}">
+      {% endif %}
+      <h2 class="country-name">{{ country_name }}</h2>
+      <p class="phone-number">
+        <strong>📞 شماره:</strong>
+        <span class="number-text">+{{ area_code }} {{ number }}</span>
+      </p>
+
+      <div class="buttons">
+        <a href="{% url 'numbers:get_code' number_id %}" class="btn primary">
+          📩 دریافت کد
+        </a>
+        <a href="{% url 'numbers:cancel_wait' number_id %}" class="btn danger">
+          ❌ لغو سفارش
+        </a>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+<style>
+/* --- کارت شماره --- */
+.number-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 40px 30px;
+  margin: 60px auto;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: Vazir, sans-serif;
+}
+
+.number-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+
+/* --- پرچم کشور --- */
+.flag {
+  width: 80px;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+/* --- نام کشور و شماره --- */
+.country-name {
+  color: #007bff;
+  font-size: 1.8em;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.phone-number {
+  font-size: 1.2em;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.number-text {
+  font-weight: bold;
+  color: #007bff;
+}
+
+/* --- دکمه‌ها --- */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.btn.primary {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.btn.primary:hover {
+  background-color: #0056b3;
+}
+
+.btn.danger {
+  background-color: #fff;
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+.btn.danger:hover {
+  background-color: #e74c3c;
+  color: #fff;
+}
+
+/* --- پیام خطا --- */
+.alert.error {
+  background-color: #ffe5e5;
+  border: 1px solid #ffb3b3;
+  color: #c0392b;
+  padding: 15px 20px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  margin: 40px auto;
+  max-width: 600px;
+}
+
+.alert.error i {
+  margin-left: 8px;
+  color: #c0392b;
+}
+
+/* --- انیمیشن ساده برای ورود کارت --- */
+.number-card {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
+{% endblock %}

@@ -1,0 +1,200 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="about-page container">
+
+  <!-- هدر صفحه -->
+  <section class="about-hero">
+    <h1>درباره ما</h1>
+    <p>ما در تلاشیم تا خرید شماره مجازی را ساده، سریع و امن برای همه کاربران ایرانی فراهم کنیم.</p>
+  </section>
+
+  <!-- بخش معرفی شرکت -->
+  <section class="about-section">
+    <div class="about-card">
+      <h2>ما که هستیم؟</h2>
+      <p>
+        وب‌سایت ما با هدف ارائه‌ی شماره‌های مجازی از بیش از <strong>۴۰ کشور مختلف</strong> تأسیس شده است.  
+        تیم ما متشکل از برنامه‌نویسان و متخصصان زیرساخت است که تجربه‌ی چندین ساله در زمینه‌ی ارتباطات آنلاین دارند.  
+        ما تلاش می‌کنیم با اتصال مستقیم به تأمین‌کنندگان بین‌المللی، سرویس‌هایی با بالاترین سرعت و کمترین قیمت را ارائه دهیم.
+      </p>
+    </div>
+
+    <div class="about-card">
+      <h2>چرا ما را انتخاب کنید؟</h2>
+      <ul>
+        <li>🔹 سرعت بالا در دریافت شماره و کد تأیید</li>
+        <li>🔹 پشتیبانی ۲۴ ساعته و واقعی از طریق تیکت و واتساپ</li>
+        <li>🔹 امنیت کامل اطلاعات کاربران و پرداخت امن</li>
+        <li>🔹 قیمت منصفانه و تخفیف ویژه برای خریدهای مکرر</li>
+      </ul>
+    </div>
+
+    <div class="about-card">
+      <h2>هدف ما</h2>
+      <p>
+        هدف اصلی ما ارائه تجربه‌ای لذت‌بخش و بدون دغدغه برای کاربران ایرانی در استفاده از سرویس‌های بین‌المللی است.  
+        ما هر روز در حال گسترش خدمات و افزایش کشورها و اپ‌های پشتیبانی‌شده هستیم تا شما با چند کلیک ساده به هر شماره‌ای که نیاز دارید دسترسی پیدا کنید.
+      </p>
+    </div>
+  </section>
+
+  <!-- بخش تماس -->
+  <section class="contact-section">
+    <h2>ارتباط با ما</h2>
+    <p>در صورت هرگونه سؤال یا نیاز به پشتیبانی، می‌توانید از طریق راه‌های زیر با ما در ارتباط باشید:</p>
+
+    <ul class="contact-list">
+      <li>📧 ایمیل: <a href="mailto:support@numberland.ir">support@numberland.ir</a></li>
+      <li>💬 واتساپ: <a href="https://wa.me/989123456789" target="_blank">+98 912 345 6789</a></li>
+      <li>🌐 اینستاگرام: <a href="https://instagram.com/numberland_ir" target="_blank">@numberland_ir</a></li>
+    </ul>
+  </section>
+</div>
+
+<style>
+.about-page {
+  font-family: Vazir, sans-serif;
+  padding: 60px 15px;
+  color: #2c3e50;
+}
+
+/* --- هدر صفحه --- */
+.about-hero {
+  text-align: center;
+  margin-bottom: 60px;
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+  color: #fff;
+  padding: 60px 20px;
+  border-radius: 20px;
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+
+.about-hero h1 {
+  font-size: 2.4rem;
+  margin-bottom: 15px;
+}
+
+.about-hero p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* --- کارت‌ها --- */
+.about-section {
+  display: grid;
+  gap: 25px;
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+}
+
+.about-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+}
+
+.about-card h2 {
+  color: #007bff;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+
+.about-card p {
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.about-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about-card ul li {
+  font-size: 1rem;
+  line-height: 2;
+  color: #333;
+}
+
+/* --- بخش تماس --- */
+.contact-section {
+  text-align: center;
+  background: #fff;
+  padding: 40px 25px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-section h2 {
+  color: #007bff;
+  margin-bottom: 15px;
+}
+
+.contact-section p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-list li {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.contact-list a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
+}
+
+/* --- انیمیشن --- */
+.about-card, .contact-section {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- واکنش‌گرا --- */
+@media (max-width: 768px) {
+  .about-hero {
+    padding: 40px 15px;
+  }
+  .about-card {
+    padding: 25px 15px;
+  }
+  .about-hero h1 {
+    font-size: 2rem;
+  }
+  .about-hero p {
+    font-size: 1rem;
+  }
+}
+</style>
+{% endblock %}

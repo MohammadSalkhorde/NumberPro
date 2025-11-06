@@ -1,0 +1,292 @@
+{% extends "main.html" %}
+{% block content %}
+{% load humanize %}
+
+{% if request.GET.canceled %}
+  <script>
+    setTimeout(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'لغو با موفقیت انجام شد ✅',
+        text: 'شماره مورد نظر با موفقیت لغو شد.',
+        confirmButtonText: 'باشه'
+      });
+    }, 500);
+  </script>
+{% elif request.GET.error %}
+  <script>
+    setTimeout(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'خطا در لغو ❌',
+        text: 'متأسفانه لغو شماره با مشکل مواجه شد.',
+        confirmButtonText: 'باشه'
+      });
+    }, 500);
+  </script>
+{% endif %}
+
+
+<div class="services-section">
+  <div class="container">
+    <h2 class="services-title">لیست سرویس‌های موجود</h2>
+    <p class="services-subtitle">برای مشاهده شماره‌ها روی هر سرویس کلیک کنید</p>
+    <div id="services-container" class="accordion">
+      {% for service in services %}
+      <div class="accordion-item">
+        <button class="accordion-header" onclick="toggleService(this)">
+          <img src="https://numberland.ir{{ service.image }}" alt="{{ service.name }}">
+          {{ service.name }}
+        </button>
+        <div class="accordion-body" style="display: none;" data-service-id="{{ service.id }}">
+          در حال بارگذاری شماره‌ها...
+          <div class="filter-container">
+            <label for="price-sort">مرتب‌سازی بر اساس:</label>
+            <select id="price-sort" onchange="sortNumbers(this.value)">
+              <option value="">انتخاب کنید</option>
+              <option value="asc">قیمت از کم به زیاد</option>
+              <option value="desc">قیمت از زیاد به کم</option>
+            </select>
+          </div>
+
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<style>
+  /* --- صفحه لیست سرویس‌ها (numbers_list) --- */
+
+.services-section {
+  padding: 60px 0;
+  background: #fff;
+}
+
+.services-title {
+  text-align: center;
+  font-size: 2em;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+.services-subtitle {
+  text-align: center;
+  color: #555;
+  margin-bottom: 40px;
+}
+
+.accordion {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.accordion-item {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.accordion-header {
+  width: 100%;
+  background: #f1f5ff;
+  border: none;
+  text-align: right;
+  padding: 15px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.accordion-header:hover {
+  background: #e6efff;
+}
+
+.accordion-header img {
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+}
+
+.accordion-body {
+  padding: 15px 20px;
+  display: none;
+  background: #fff;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.filter-bar label {
+  font-size: 14px;
+  color: #333;
+}
+
+.filter-bar select {
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.numbers-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.number-box {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: right;
+  transition: all 0.3s;
+}
+
+.number-box:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transform: translateY(-3px);
+}
+
+.number-box .info span {
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.buy-number-btn {
+  width: 100%;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.buy-number-btn:hover {
+  background: #0056b3;
+}
+
+</style>
+<script>
+  async function toggleService(button) {
+    const body = button.nextElementSibling;
+    const serviceId = body.getAttribute("data-service-id");
+
+    if (body.style.display === "none" || !body.style.display) {
+      body.style.display = "block";
+
+      if (!body.hasAttribute("data-loaded")) {
+        body.innerHTML = `
+          <div class="filter-bar">
+            <label>مرتب‌سازی بر اساس قیمت:</label>
+            <select onchange="sortNumbers(this)" data-target="${serviceId}">
+              <option value="">پیشنهادی</option>
+              <option value="asc">کم به زیاد</option>
+              <option value="desc">زیاد به کم</option>
+            </select>
+          </div>
+          <div class="numbers-list">در حال دریافت شماره...</div>
+        `;
+
+        try {
+          const res = await fetch(`{% url 'numbers:get_numbers' %}?service_id=${serviceId}`);
+          const result = await res.json();
+          const container = body.querySelector(".numbers-list");
+
+          if (result.numbers && result.numbers.length > 0) {
+            container.innerHTML = renderNumbers(result.numbers);
+            container.dataset.numbers = JSON.stringify(result.numbers);
+          } else {
+            container.innerHTML = "شماره‌ای در حال حاضر موجود نیست.";
+          }
+
+          body.setAttribute("data-loaded", "true");
+        } catch (error) {
+          console.error("خطا:", error);
+          body.innerHTML = "خطا در دریافت شماره‌ها.";
+        }
+      }
+    } else {
+      body.style.display = "none";
+    }
+  }
+
+  function formatNumberWithCommas(x) {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function renderNumbers(numbers) {
+  return numbers
+    .filter(item => parseInt(item.count) > 0)
+    .map(item => `
+      <div class="number-box">
+        <div class="info">
+          <span>${item.emoji}</span>
+          <span>${item.cname}</span>
+          <span>تعداد: ${item.count}</span>
+          <span>قیمت: ${formatNumberWithCommas(item.amount)}</span>
+        </div>
+        <button 
+          class="buy-number-btn"
+          data-service-id="${item.service}"
+          data-country-id="${item.country}"
+          onclick="buyNumber(this)">
+          دریافت شماره
+        </button>
+      </div>
+    `)
+    .join("");
+}
+
+
+  function sortNumbers(select) {
+    const sortOrder = select.value;
+    const serviceId = select.getAttribute("data-target");
+    const container = document.querySelector(`.accordion-body[data-service-id="${serviceId}"] .numbers-list`);
+    
+    if (!container) return;
+
+    let numbers = JSON.parse(container.dataset.numbers);
+    numbers.sort((a, b) => {
+      const priceA = parseInt(a.amount);
+      const priceB = parseInt(b.amount);
+      return sortOrder === "asc" ? priceA - priceB : priceB - priceA;
+    });
+
+    container.innerHTML = renderNumbers(numbers);
+  }
+
+function buyNumber(button) {
+  const serviceId = button.getAttribute("data-service-id");
+  const countryId = button.getAttribute("data-country-id");
+
+  if (!serviceId || !countryId) {
+    alert("شناسه سرویس یا کشور نامعتبر است.");
+    return;
+  }
+
+  // هدایت به صفحه خرید
+  window.location.href = `/numbers/buy/?service_id=${serviceId}&country_id=${countryId}`;
+}
+
+</script>
+
+{% endblock %}
